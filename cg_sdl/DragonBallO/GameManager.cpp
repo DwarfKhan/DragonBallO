@@ -24,33 +24,27 @@ namespace {
 	Player player;
 	Sprite tree;
 	Sprite boulder;
+	Sprite target;
 	MoveTrigger moveTrigger;
 }
 
 void InitEntities() {
-	//Setting path names...
+
+//PLAYER
+
+	//path name
 	player.SetTexturePath("textures/link_sheet.png");
-	tree.SetTexturePath("textures/tree_green.gif");
-	boulder.SetTexturePath("textures/boulder.png");
 
-	//Loading textures...
+	//load texture
 	sdlInit.LoadTexture(player);
-	sdlInit.LoadTexture(tree);
-	sdlInit.LoadTexture(boulder);
 
-	//Setting position information...
+	//position
 	player.SetPosition({0, 0});
-	tree.SetPosition({200, 300});
-	boulder.SetPosition({200, 150});
-	moveTrigger.SetPosition({300, 150});
 
-	//Setting size information...
+	//size
 	player.SetSize(70, 70);
-	tree.SetSize(64, 78);
-	boulder.SetSize(45, 45);
-	moveTrigger.SetSize(45, 45);
 
-	//Set sprite sheet texture coordinates...
+	//walk sprite clips
 	player.InitSpriteSheet(0, 14, 6);
 	player.SetSpriteClip(90, 1, 30, 30, 3);			//up...
 	player.SetSpriteClip(90, 31, 30, 30, 17);		//up move...
@@ -61,48 +55,104 @@ void InitEntities() {
 	player.SetSpriteClip(60, 1, 30, 30, 2);			//left...
 	player.SetSpriteClip(60, 31, 30, 30, 16);		//left move...
 
-	player.SetSpriteClip(170, 141, 30, 31, 61);		//first left attack...
-	player.SetSpriteClip(173, 109, 30, 30, 48);		//second left attack...
-	player.SetSpriteClip(173, 71, 30, 30, 34);		//last left attack...
+	//Attack sprite clips
+	player.SetSpriteClip(170, 141, 30, 31, 5);		//up attack...
+	player.SetSpriteClip(173, 71, 30, 30, 6);		//left attack...
+	player.SetSpriteClip(203, 142, 30, 30, 7);		//right attack...
+	player.SetSpriteClip(295, 59, 30, 32, 8);		//down attack...
 
-	player.SetSpriteClip(203, 142, 30, 30, 62);		//last right attack...
-	player.SetSpriteClip(203, 109, 30, 30, 49);		//second right attack...
-	player.SetSpriteClip(204, 77, 29, 31, 35);		//first right attack...
+	//attack anchor positions
+	player.SetAnchorOffset({-16, -13}, 5);			//up attack...
+	player.SetAnchorOffset({-26, -5}, 6);			//left attack...
+	player.SetAnchorOffset({4, 0}, 7);				//right attack...
+	player.SetAnchorOffset({ -23, 8 }, 8);		//down attack...
 	
-
-	player.SetSpriteClip(268, 108, 30, 30, 150);		//first up attack...
-	player.SetSpriteClip(305, 108, 30, 30, 151);		//second up attack...
-	player.SetSpriteClip(328, 108, 30, 30, 152);		//last up attack...
-
-	
-
-	//Set sprite sheet anchor positions...
-	player.SetAnchorOffset({-16, -13}, 61);			//first left attack...
-	player.SetAnchorOffset({-23, -10}, 48);			//second left attack...
-	player.SetAnchorOffset({-26, -5}, 34);			//last left attack...
-
-	player.SetAnchorOffset({4, 0}, 62);				//last right attack...
-	player.SetAnchorOffset({2, -10}, 49);			//second right attack...
-	player.SetAnchorOffset({-11, -13}, 35);			//first right attack...=>
-
-	
-	/*
-	player.SetAnchorOffset({-16,-13}, 150);			//first up attack...
-	player.SetAnchorOffset({-16,-13}, 151);			//second up attack...
-	player.SetAnchorOffset({-16,-13}, 152);			//last up attack...
-	*/
-
-	//Setup collision...
+	//collision
 	player.ConfigureCollision(true, true, { 0, 14 }, { 35, 16 });
-	tree.ConfigureCollision(true, false);
-	boulder.ConfigureCollision(false, true);
-	moveTrigger.ConfigureCollision(false, false);
 
 	player.AddCollidableEntity(tree);
 	player.AddCollidableEntity(boulder);
 	player.AddCollidableEntity(moveTrigger);
 
-	moveTrigger.SetMovePos({960, 200});
+//END PLAYER
+
+//TREE
+
+	//path name
+	tree.SetTexturePath("textures/tree_green.gif");
+
+	//load texture
+	sdlInit.LoadTexture(tree);
+
+	//position
+	tree.SetPosition({ 200, 300 });
+
+	//size
+	tree.SetSize(64, 78);
+
+	//collision
+	tree.ConfigureCollision(true, false);
+
+//END TREE
+
+//BOULDER
+
+	//path name
+	boulder.SetTexturePath("textures/boulder.png");
+
+	//load texture
+	sdlInit.LoadTexture(boulder);
+
+	//position
+	boulder.SetPosition({ 200, 150 });
+
+	//size
+	boulder.SetSize(45, 45);
+
+	//collision
+	boulder.ConfigureCollision(false, true);
+
+//END BOULDER
+
+//MOVETRIGGER
+
+	//position
+	moveTrigger.SetPosition({ 300, 150 });
+
+	//size
+	moveTrigger.SetSize(45, 45);
+
+	//collision
+	moveTrigger.ConfigureCollision(false, false);
+
+	//destination
+	moveTrigger.SetMovePos({ 960, 200 });
+
+//END MOVETRIGGER
+
+//TARGET
+
+	//path name
+	target.SetTexturePath("textures/scarecrow.png");
+
+	//load texture
+	sdlInit.LoadTexture(target);
+
+	//sprite clips
+	target.SetSpriteClip(0,0,32,32,1);
+
+	//position
+	target.SetPosition({990 , 200 });
+
+	//size
+	target.SetSize(32, 32);
+
+	//collision
+	target.ConfigureCollision(true, false);
+
+//END TARGET
+
+	
 
 	//TODO: Don't hard-code this...
 	gWorld.InitWorldGrid({ 0, 70 - 35, 14, 70 - 16});
@@ -121,12 +171,14 @@ void GameManager::Cleanup(){
 	sdlInit.CleanupSprite(player);
 	sdlInit.CleanupSprite(tree);
 	sdlInit.CleanupSprite(boulder);
+	sdlInit.CleanupSprite(target);
 	sdlInit.Cleanup();
 }
 
 //TODO: Add deltatime later...
 void GameManager::Update() {
 	tree.Update();
+	target.Update();
 	boulder.Update();
 	player.Update();
 
@@ -142,12 +194,14 @@ void GameManager::Render(){
 	sdlInit.Render();
 
 	sdlInit.DrawSprite(tree);
+	sdlInit.DrawSprite(target);
 	sdlInit.DrawSprite(boulder);
 	sdlInit.DrawSprite(player);
 
 	//Needs to come last...
 	if (SHOW_COLLIDERS) {
 		sdlInit.DrawEntityCollider(moveTrigger);
+		sdlInit.DrawEntityCollider(target);
 		sdlInit.DrawEntityCollider(tree);
 		sdlInit.DrawEntityCollider(boulder);
 		sdlInit.DrawEntityCollider(player);
