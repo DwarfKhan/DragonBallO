@@ -23,12 +23,12 @@ public:
 	SDL_Rect* GetSpriteClip();
 	Int2* GetAnchorOffset();
 
+	int mSpriteClipIndex{ 0 };
 protected:
 	//The actual hardware texture
 	SDL_Texture* mTexture;
 	const char* mTexturePath;
 
-	int mSpriteClipIndex{ 0 };
 	int mNumSpriteClips{ 0 };
 	int mNumSpriteClipsX{ 0 };
 	int mNumSpriteClipsY{ 0 };

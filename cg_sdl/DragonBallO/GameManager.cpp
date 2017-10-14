@@ -4,9 +4,10 @@
 #include "Player.h"
 #include "Camera.h"
 #include "MoveTrigger.h"
+#include "LivingThing.h"
 
 #define CAMERA_MODE Camera::Mode::PAN
-#define SHOW_COLLIDERS true
+#define SHOW_COLLIDERS false
 
 //Also camera dimension...
 const int SCREEN_WIDTH = 640;
@@ -24,7 +25,7 @@ namespace {
 	Player player;
 	Sprite tree;
 	Sprite boulder;
-	Sprite target;
+	LivingThing target;
 	MoveTrigger moveTrigger;
 }
 
@@ -44,8 +45,10 @@ void InitEntities() {
 	//size
 	player.SetSize(70, 70);
 
-	//walk sprite clips
+	//Init Sprite Sheet
 	player.InitSpriteSheet(0, 14, 6);
+
+	//walk sprite clips
 	player.SetSpriteClip(90, 1, 30, 30, 3);			//up...
 	player.SetSpriteClip(90, 31, 30, 30, 17);		//up move...
 	player.SetSpriteClip(30, 1, 30, 30, 1);			//down...
@@ -138,14 +141,28 @@ void InitEntities() {
 	//load texture
 	sdlInit.LoadTexture(target);
 
+	//init sprite sheet
+	target.InitSpriteSheet(0, 4, 2);
+
 	//sprite clips
-	target.SetSpriteClip(0,0,32,32,1);
+	target.SetSpriteClip(0, 0, 32, 32, 0);
+	target.SetSpriteClip(32, 0, 32, 32, 1);
+	target.SetSpriteClip(64, 0, 32, 32, 2);
+	target.SetSpriteClip(96, 0, 32, 32, 3);
+	target.SetSpriteClip(0, 32, 32, 32, 4);
+	target.SetSpriteClip(32, 32, 32, 32,5);
+
+	//animation
+	target.animIdleCount = 2;
+	target.animIdleIndeces[0] = 0;
+	target.animIdleIndeces[0] = 1;
+
 
 	//position
 	target.SetPosition({990 , 200 });
 
 	//size
-	target.SetSize(32, 32);
+	target.SetSize(70, 70);
 
 	//collision
 	target.ConfigureCollision(true, false);
