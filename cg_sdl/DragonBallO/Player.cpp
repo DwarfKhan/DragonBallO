@@ -31,6 +31,11 @@ extern bool gThirdKeyUp;	//keys 3
 extern bool gFourthKeyUp;	//keys 4
 
 namespace {
+	int attackRange = 10;
+	int attackDamage = 1;
+}
+
+namespace {
 	int lastMoveIndex = 4;
 	int lastAttackIndex = 0;
 }

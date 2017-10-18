@@ -9,6 +9,8 @@ public:
 	virtual ~Player() override {}
 
 	void Update() override;
+	int attackRange;
+	int attackDamage;
 
 private:
 	void Move();

@@ -12,6 +12,7 @@ public:
 	void AnimIdle();
 	void Update() override;
 
+	bool animIdle;
 	 int animIdleCount;
 	 int animIdleIndeces[10];
 };

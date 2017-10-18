@@ -7,7 +7,8 @@ extern Camera gCamera;
 
 
 float idleTimer = 0.0f;
-float animIdleSpeed = 12;
+float animIdleSpeed = 6;
+bool animIdle = true;
 
 
 LivingThing::LivingThing()
@@ -22,14 +23,15 @@ LivingThing::~LivingThing()
 
 void LivingThing::AnimIdle()
 {
+	if (animIdle) {
+
 	idleTimer += animIdleSpeed * gDeltaTime;
 
 	int index = (int)idleTimer % animIdleCount;
 
 
 	mSpriteClipIndex = animIdleIndeces[index];
-
-//	mSpriteClipIndex = 1;
+	}
 }
 
 void LivingThing::Update()

@@ -76,6 +76,7 @@ void InitEntities() {
 	player.AddCollidableEntity(tree);
 	player.AddCollidableEntity(boulder);
 	player.AddCollidableEntity(moveTrigger);
+	player.AddCollidableEntity(target);
 
 //END PLAYER
 
@@ -145,24 +146,27 @@ void InitEntities() {
 	target.InitSpriteSheet(0, 4, 2);
 
 	//sprite clips
-	target.SetSpriteClip(0, 0, 32, 32, 0);
+	target.SetSpriteClip(0, 0, 31, 31, 0);
 	target.SetSpriteClip(32, 0, 32, 32, 1);
 	target.SetSpriteClip(64, 0, 32, 32, 2);
 	target.SetSpriteClip(96, 0, 32, 32, 3);
 	target.SetSpriteClip(0, 32, 32, 32, 4);
 	target.SetSpriteClip(32, 32, 32, 32,5);
 
-	//animation
-	target.animIdleCount = 2;
-	target.animIdleIndeces[0] = 0;
-	target.animIdleIndeces[0] = 1;
+	//anchor offsets
+	target.SetAnchorOffset({ 0, -13 }, 0);
 
+	//animation
+	target.animIdle = false;
+
+	//Health
+	target.Destructible::SetHealth(3, 3);
 
 	//position
 	target.SetPosition({990 , 200 });
 
 	//size
-	target.SetSize(70, 70);
+	target.SetSize(50, 50);
 
 	//collision
 	target.ConfigureCollision(true, false);
