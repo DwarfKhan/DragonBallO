@@ -14,7 +14,7 @@ public:
 
 	bool animIdle;
 	 int animIdleCount;
-	 int animIdleIndeces[10];
+	 int animIdleIndeces[10]; //TODO: dont hard code this...
 };
 
 

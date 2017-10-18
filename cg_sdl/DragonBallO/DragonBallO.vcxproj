@@ -80,6 +80,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SDLInit.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +95,7 @@
     <ClInclude Include="SDLInit.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Trigger.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

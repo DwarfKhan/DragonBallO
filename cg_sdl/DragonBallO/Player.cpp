@@ -74,11 +74,50 @@ void Player::Update() {
 	if (gCamera.IsPanning()) {
 		return;
 	}
-
+	
+	MyMath::Float2 weaponPos(mPos.x + mSize.x - mBottomRightCollOffset.x, mPos.y + mTopLeftCollOffset.y);
+	
+	playerWeapon->SetPosition(weaponPos);
+	
+	
 	Move();
 	Attack();
 	Sprite::Update();
 }
+
+void Player::SetWeapon(Weapon *weapon)
+{
+	playerWeapon = weapon;
+}
+
+void Player::CheckDirection()
+{
+	if (mFacingDirection == 0) {
+		xDirMultiplier = 0;
+		yDirMultiplier = 1;
+	}
+	else if (mFacingDirection == 1) {
+		xDirMultiplier = 0;
+		yDirMultiplier = -1;
+	}
+	else if (mFacingDirection == 2) {
+		xDirMultiplier = -1;
+		yDirMultiplier = 0;
+	}
+	else {
+		xDirMultiplier = 1;
+		yDirMultiplier = 0;
+	}
+}
+
+void Player::SetCorners()
+{
+	bottomRightCornerPos.x = mPos.x + mSize.x - mBottomRightCollOffset.x;
+	bottomRightCornerPos.y = mPos.y + mSize.y -  mBottomRightCollOffset.y;
+	bottomLeftCornerPos.x = mPos.x + mTopLeftCollOffset.x;
+	bottomLeftCornerPos.y = mPos.y + mSize.y - mBottomRightCollOffset.y;
+}
+
 
 void Player::Move() {
 	//If we are attacking we want to stop movement...
@@ -104,6 +143,7 @@ void Player::Move() {
 
 		lastAttackIndex = 0;
 		lastMoveIndex = animRightIndices[0];
+		Entity::mFacingDirection = 3;
 	}
 	else if (gHorizKeysHeld < 0) {
 		moveLeftTimer += animMoveSpeed * gDeltaTime;
@@ -113,6 +153,7 @@ void Player::Move() {
 
 		lastAttackIndex = 1;
 		lastMoveIndex = animLeftIndices[0];
+		Entity::mFacingDirection = 2;
 	}
 	else if (gVertKeysHeld > 0) {
 		moveDownTimer += animMoveSpeed * gDeltaTime;
@@ -122,6 +163,7 @@ void Player::Move() {
 
 		lastAttackIndex = 2;
 		lastMoveIndex = animDownIndices[0];
+		Entity::mFacingDirection = 1;
 	}
 	else if (gVertKeysHeld < 0) {
 		moveUpTimer += animMoveSpeed * gDeltaTime;
@@ -131,6 +173,7 @@ void Player::Move() {
 
 		lastAttackIndex = 3;
 		lastMoveIndex = animUpIndices[0];
+		Entity::mFacingDirection = 0;
 	}
 	else {
 		mSpriteClipIndex = lastMoveIndex;

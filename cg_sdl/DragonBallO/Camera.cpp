@@ -46,8 +46,8 @@ void Camera::RestrictTargetToWorld(Entity &target) {
 }
 
 void Camera::SetPos(Float2 pos) {
-	mPos.x = pos.x - (SCREEN_WIDTH / 2.0f);
-	mPos.y = pos.y - (SCREEN_HEIGHT / 2.0f);
+	pos.x = pos.x - (SCREEN_WIDTH / 2.0f);
+	pos.y = pos.y - (SCREEN_HEIGHT / 2.0f);
 
 	if (mMode == Mode::FOLLOW) {
 		return;

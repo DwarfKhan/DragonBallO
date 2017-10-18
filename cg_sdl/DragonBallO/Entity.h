@@ -31,6 +31,8 @@ public:
 
 	void AddCollidableEntity(Entity &entity);
 
+	
+
 private:
 	void CheckCollision();
 
@@ -45,6 +47,7 @@ protected:
 	Int2 mBottomRightCollOffset;
 
 	UByte mPushbackSides{ 0 };
+	int mFacingDirection; // 0 is up, 1 is down, 2 is left, 3 is right
 
 	//If this entity can move, it needs a move speed...
 	float mMoveSpeed{ 140.f };

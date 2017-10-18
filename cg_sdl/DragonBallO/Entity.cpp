@@ -46,6 +46,7 @@ void Entity::AddCollidableEntity(Entity &entity) {
 	mCollidableEntities.push_back(&entity);
 }
 
+
 void Entity::CheckCollision() {
 	for (Entity *other : mCollidableEntities) {
 		Float2 topLeft = { mPos.x + mTopLeftCollOffset.x ,

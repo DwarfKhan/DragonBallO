@@ -5,9 +5,10 @@
 #include "Camera.h"
 #include "MoveTrigger.h"
 #include "LivingThing.h"
+#include "Weapon.h"
 
 #define CAMERA_MODE Camera::Mode::PAN
-#define SHOW_COLLIDERS false
+#define SHOW_COLLIDERS true
 
 //Also camera dimension...
 const int SCREEN_WIDTH = 640;
@@ -27,6 +28,7 @@ namespace {
 	Sprite boulder;
 	LivingThing target;
 	MoveTrigger moveTrigger;
+	Weapon playerWeapon;
 }
 
 void InitEntities() {
@@ -78,7 +80,23 @@ void InitEntities() {
 	player.AddCollidableEntity(moveTrigger);
 	player.AddCollidableEntity(target);
 
+	//setWeapon
+	player.SetWeapon(&playerWeapon);
+
 //END PLAYER
+
+//PLAYERWEAPON
+
+	//
+	playerWeapon.attacking = true;
+
+	//size
+	playerWeapon.SetSize(5,5);
+
+	//collision
+	playerWeapon.ConfigureCollision(false, false);
+
+//END PLAYERWEAPON
 
 //TREE
 
@@ -115,6 +133,7 @@ void InitEntities() {
 
 	//collision
 	boulder.ConfigureCollision(false, true);
+	boulder.AddCollidableEntity(tree);
 
 //END BOULDER
 
@@ -226,5 +245,6 @@ void GameManager::Render(){
 		sdlInit.DrawEntityCollider(tree);
 		sdlInit.DrawEntityCollider(boulder);
 		sdlInit.DrawEntityCollider(player);
+		sdlInit.DrawEntityCollider(playerWeapon);
 	}
 }
