@@ -18,8 +18,23 @@ void Entity::SetSize(int width, int height) {
 	mSize = { width, height };
 }
 
+MyMath::Int2 Entity::GetSize()
+{
+	return mSize;
+}
+
 void Entity::SetMoveSpeed(float moveSpeed) {
 	mMoveSpeed = moveSpeed;
+}
+
+void Entity::SetFacingDirection(int direction)
+{
+	mFacingDirection = direction;
+}
+
+int Entity::GetFacingDirection()
+{
+	return mFacingDirection;
 }
 
 void Entity::ConfigureCollision(bool canPushBack, bool canBePushedBack,

@@ -81,7 +81,9 @@ void InitEntities() {
 	player.AddCollidableEntity(target);
 
 	//setWeapon
-	player.SetWeapon(&playerWeapon);
+	player.SetWeapon(&playerWeapon, 33);
+
+
 
 //END PLAYER
 
@@ -94,7 +96,8 @@ void InitEntities() {
 	playerWeapon.SetSize(5,5);
 
 	//collision
-	playerWeapon.ConfigureCollision(false, false);
+	playerWeapon.ConfigureCollision(true, true);
+	playerWeapon.AddCollidableEntity(target);
 
 //END PLAYERWEAPON
 
@@ -173,7 +176,7 @@ void InitEntities() {
 	target.SetSpriteClip(32, 32, 32, 32,5);
 
 	//anchor offsets
-	target.SetAnchorOffset({ 0, -13 }, 0);
+	//target.SetAnchorOffset({ 0, -13 }, 0);
 
 	//animation
 	target.animIdle = false;
@@ -189,6 +192,8 @@ void InitEntities() {
 
 	//collision
 	target.ConfigureCollision(true, false);
+
+	target.AddCollidableEntity(playerWeapon);
 
 //END TARGET
 

@@ -39,3 +39,8 @@ void LivingThing::Update()
 	AnimIdle();
 	Sprite::Update();
 }
+
+bool LivingThing::TakeDamage(int damage)
+{
+	return Destructible::TakeDamage(damage);
+}

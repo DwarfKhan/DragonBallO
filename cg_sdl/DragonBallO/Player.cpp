@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Camera.h"
 
+
 #define ANIM_RIGHT_COUNT 2
 #define ANIM_LEFT_COUNT 2
 #define ANIM_UP_COUNT 2
@@ -75,9 +76,6 @@ void Player::Update() {
 		return;
 	}
 	
-	MyMath::Float2 weaponPos(mPos.x + mSize.x - mBottomRightCollOffset.x, mPos.y + mTopLeftCollOffset.y);
-	
-	playerWeapon->SetPosition(weaponPos);
 	
 	
 	Move();
@@ -85,37 +83,52 @@ void Player::Update() {
 	Sprite::Update();
 }
 
-void Player::SetWeapon(Weapon *weapon)
+void Player::SetWeapon(Weapon *weapon, int range, int damage)
 {
 	playerWeapon = weapon;
+	attackRange = range;
+	attackDamage = damage;
 }
 
-void Player::CheckDirection()
-{
-	if (mFacingDirection == 0) {
-		xDirMultiplier = 0;
-		yDirMultiplier = 1;
-	}
-	else if (mFacingDirection == 1) {
-		xDirMultiplier = 0;
-		yDirMultiplier = -1;
-	}
-	else if (mFacingDirection == 2) {
-		xDirMultiplier = -1;
-		yDirMultiplier = 0;
-	}
-	else {
-		xDirMultiplier = 1;
-		yDirMultiplier = 0;
-	}
-}
 
 void Player::SetCorners()
 {
 	bottomRightCornerPos.x = mPos.x + mSize.x - mBottomRightCollOffset.x;
 	bottomRightCornerPos.y = mPos.y + mSize.y -  mBottomRightCollOffset.y;
+
 	bottomLeftCornerPos.x = mPos.x + mTopLeftCollOffset.x;
 	bottomLeftCornerPos.y = mPos.y + mSize.y - mBottomRightCollOffset.y;
+
+	topRightCornerPos.x = mPos.x + mSize.x - mBottomRightCollOffset.x;
+	topRightCornerPos.y = mPos.y + mTopLeftCollOffset.y;
+
+	topLeftCornerPos.x = mPos.x + mTopLeftCollOffset.x;
+	topLeftCornerPos.y = mPos.y + mTopLeftCollOffset.y;
+}
+
+MyMath::Float2 Player::FindWeaponPos()
+{
+	MyMath::Int2 wepSize = playerWeapon->GetSize();
+	MyMath::Float2 position = { 0,0 };
+	if (Entity::GetFacingDirection() == 0) {
+		position.x = ((topLeftCornerPos.x + topRightCornerPos.x) / 2) - (wepSize.x / 2);
+		position.y = topLeftCornerPos.y - (wepSize.y + (attackRange + 1));
+		//													    	  /\
+		//								Not sure why this 1 is needed but it was the only way to get it to look right...
+	}
+	else if (Entity::GetFacingDirection() == 1) {
+		position.x = ((topLeftCornerPos.x + topRightCornerPos.x) / 2) - (wepSize.x/2);
+		position.y = bottomLeftCornerPos.y + attackRange;
+	}
+	else if (Entity::GetFacingDirection() == 2) {
+		position.y = ((topLeftCornerPos.y + bottomLeftCornerPos.y) / 2) - (wepSize.y/2);
+		position.x = topLeftCornerPos.x - (wepSize.x + attackRange);
+	}
+	else if (Entity::GetFacingDirection() == 3) {
+		position.y = ((topLeftCornerPos.y + bottomLeftCornerPos.y) / 2) - (wepSize.y / 2);
+		position.x = topRightCornerPos.x + attackRange;
+	}
+	return position;
 }
 
 
@@ -181,8 +194,13 @@ void Player::Move() {
 }
 
 void Player::Attack() {
+	//Update attack variables
+	playerWeapon->SetAttack(attackRange, attackDamage);
 	//Update animation...
 	if (attackTimer > 0.f) {
+		SetCorners();
+		weaponPos = FindWeaponPos();
+		playerWeapon->SetPosition(weaponPos);
 		attackTimer -= gDeltaTime;	//Updates timer...
 		float time = 1.f - (attackTimer/attackTime);
 
@@ -192,5 +210,9 @@ void Player::Attack() {
 	}	//Start animation...
 	else if (gFirstKeyDown) {
 		attackTimer = attackTime;
+		playerWeapon->attacking = true;
+	}
+	else {
+		playerWeapon->attacking = false;
 	}
 }
