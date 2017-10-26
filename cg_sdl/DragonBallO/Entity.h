@@ -36,9 +36,9 @@ public:
 	void AddCollidableEntity(Entity &entity);
 
 	
+	void CheckCollision();
 
 private:
-	void CheckCollision();
 
 protected:
 	virtual void OnCollision(Entity *other);
