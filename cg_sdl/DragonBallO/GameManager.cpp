@@ -27,6 +27,7 @@ namespace {
 	Sprite tree;
 	Sprite boulder;
 	LivingThing target;
+		Animation targetIdle;
 	MoveTrigger moveTrigger;
 	Weapon playerWeapon;
 }
@@ -179,7 +180,12 @@ void InitEntities() {
 	//target.SetAnchorOffset({ 0, -13 }, 0);
 
 	//animation
-	target.animIdle = false;
+	target.animIdleActive = false;
+	target.SetAnimIdle(&targetIdle);
+	targetIdle.SetAnimSpeed(12);
+	targetIdle.AddSpriteClip(0);
+	targetIdle.AddSpriteClip(1);
+
 
 	//Health
 	target.Destructible::SetHealth(3, 3);

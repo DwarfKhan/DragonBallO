@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include "LivingThing.h"
 
-
+LivingThing livingThingTypeHolder;
 
 Weapon::Weapon()
 {
@@ -30,7 +30,7 @@ void Weapon::OnCollision(Entity * other)
 		return;
 	}
 
-	if (typeid(*other) != typeid(LivingThing)) {
+	if (typeid(*other) != typeid(livingThingTypeHolder)) {
 		attacking = false;
 		Entity::OnCollision(other);
 		return;

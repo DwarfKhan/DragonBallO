@@ -15,7 +15,6 @@ public:
 
 
 	int lastMoveIndex;
-	int lastAttackIndex;
 	int attackRange;
 	int attackDamage;
 	Weapon *playerWeapon;

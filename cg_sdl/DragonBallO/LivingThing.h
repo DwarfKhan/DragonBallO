@@ -14,15 +14,24 @@ public:
 	void Update() override;
 	bool TakeDamage(int damage); // Not sure why override doesnt work here...
 	void SetAttackingWeapon(Weapon *weapon);
+	void SetAnimIdle(Animation *anim);
 	void OnCollision(Entity *other) override;
 	void Death();
 
+
 	int attackRange;
 	int attackDamage;
-	bool animIdle;
-	int animIdleCount;
 	Weapon *attackingWeapon;
-	int animIdleIndeces[10]; //TODO: dont hard code this...
+
+
+	bool animIdleActive; 
+
+
+protected:
+	float mIdleTimer;
+	Animation *mAnimIdle;
+
+
 };
 
 

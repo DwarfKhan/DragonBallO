@@ -2,6 +2,7 @@
 #include "Camera.h"
 
 
+
 #define ANIM_RIGHT_COUNT 2
 #define ANIM_LEFT_COUNT 2
 #define ANIM_UP_COUNT 2
@@ -64,10 +65,10 @@ namespace {
 	int animDownIndices[ANIM_DOWN_COUNT] = { 1, 15 };
 
 	int animAttackLeftIndices[4][ANIM_ATTACK_COUNT] = {
-		{ 7 },	//right attack...
-		{ 6 },	//left attack...
+		{ 5 },	//up attack...
 		{ 8 },	//down attack...
-		{ 5 }	//up attack...
+		{ 6 },	//left attack...
+		{ 7 }	//right attack...
 	};
 }
 
@@ -154,7 +155,7 @@ void Player::Move() {
 		int index = (int)moveRightTimer % ANIM_RIGHT_COUNT;
 		mSpriteClipIndex = animRightIndices[index];
 
-		lastAttackIndex = 0;
+		
 		lastMoveIndex = animRightIndices[0];
 		Entity::mFacingDirection = 3;
 	}
@@ -164,7 +165,6 @@ void Player::Move() {
 		int index = (int)moveLeftTimer % ANIM_LEFT_COUNT;
 		mSpriteClipIndex = animLeftIndices[index];
 
-		lastAttackIndex = 1;
 		lastMoveIndex = animLeftIndices[0];
 		Entity::mFacingDirection = 2;
 	}
@@ -174,7 +174,6 @@ void Player::Move() {
 		int index = (int)moveDownTimer % ANIM_DOWN_COUNT;
 		mSpriteClipIndex = animDownIndices[index];
 
-		lastAttackIndex = 2;
 		lastMoveIndex = animDownIndices[0];
 		Entity::mFacingDirection = 1;
 	}
@@ -184,7 +183,6 @@ void Player::Move() {
 		int index = (int)moveUpTimer % ANIM_UP_COUNT;
 		mSpriteClipIndex = animUpIndices[index];
 
-		lastAttackIndex = 3;
 		lastMoveIndex = animUpIndices[0];
 		Entity::mFacingDirection = 0;
 	}
@@ -205,7 +203,7 @@ void Player::Attack() {
 		float time = 1.f - (attackTimer/attackTime);
 
 		int index = (int)(time * ANIM_ATTACK_COUNT) % ANIM_ATTACK_COUNT;
-		mSpriteClipIndex = animAttackLeftIndices[lastAttackIndex][index];
+		mSpriteClipIndex = animAttackLeftIndices[mFacingDirection][index];
 
 	}	//Start animation...
 	else if (gFirstKeyDown) {

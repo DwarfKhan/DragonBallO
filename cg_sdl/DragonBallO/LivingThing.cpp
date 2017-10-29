@@ -8,8 +8,7 @@ extern Camera gCamera;
 
 
 float idleTimer = 0.0f;
-float animIdleSpeed = 6;
-bool animIdle = true;
+Weapon weaponTypeHolder;
 
 
 
@@ -25,15 +24,10 @@ LivingThing::~LivingThing()
 
 void LivingThing::AnimIdle()
 {
-	if (animIdle) {
-
-	idleTimer += animIdleSpeed * gDeltaTime;
-
-	int index = (int)idleTimer % animIdleCount;
-
-
-	mSpriteClipIndex = animIdleIndeces[index];
+	if (!animIdleActive) {
+		return;
 	}
+	mSpriteClipIndex = mAnimIdle->UpdateSpriteClipIndex();
 }
 
 void LivingThing::Update()
@@ -52,10 +46,16 @@ void LivingThing::SetAttackingWeapon(Weapon * weapon)
 	attackingWeapon = weapon;
 }
 
+void LivingThing::SetAnimIdle(Animation* anim)
+{
+	mAnimIdle = anim;
+}
+
 void LivingThing::OnCollision(Entity * other)
 {
-	if (typeid(other) == typeid(Weapon*)) {
-		Destructible::TakeDamage(attackingWeapon->attackDamage);
+	if (typeid(*other) == typeid(weaponTypeHolder)) {
+	//	Destructible::TakeDamage(attackingWeapon->attackDamage);
+		animIdleActive = true;
 	}
 
 
