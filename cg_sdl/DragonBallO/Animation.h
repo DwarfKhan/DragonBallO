@@ -9,12 +9,19 @@ public:
 	~Animation();
 	void AddSpriteClip(int spriteclip);
 	void SetAnimSpeed(float speed);
-	int UpdateSpriteClipIndex();
+	void UpdateSpriteClipIndex(int &spriteClipIndex);
+	int GetFrameCount();
+
+	bool active;
+	bool loops;
+	bool hasPlayed;
+
 
 protected:
-	int mFrameCount;
-	float mSpeed;
 	float mTimer;
+	int mFrameCount;
+	int mCurrentFrame;
+	float mSpeed;
 	vector<int> mSpriteClips;
 
 

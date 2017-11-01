@@ -24,14 +24,46 @@ void Animation::SetAnimSpeed(float speed)
 	mSpeed = speed;
 }
 
-int Animation::UpdateSpriteClipIndex()
+void Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
 {
-	mTimer += mSpeed * gDeltaTime;
+	if (!active)
+	{
+		mTimer = 0;
+		hasPlayed = false;
+		mCurrentFrame = 0;
+		return;
+	}
 
+	mTimer += mSpeed * gDeltaTime;
 	int index = (int)mTimer % mFrameCount;
 
-	return index;
+	if (loops)
+	{
+		spriteClipIndex = mSpriteClips[index];
+	}
+	else if (!hasPlayed)
+	{
+		if (mCurrentFrame != index)
+		{
+			mCurrentFrame++;
+			spriteClipIndex = mSpriteClips[index];
+			printf("Current Frame: %d.\n", mCurrentFrame);
+			printf("Spriteclip: %d.\n", mSpriteClips[index]);
+			if (mCurrentFrame == mFrameCount)
+			{
+				hasPlayed = true;
+			}
+		}
+	}
+	else
+	{
+		active = false;
+	}
 
 
-	return 0;
+}
+
+int Animation::GetFrameCount()
+{
+	return mFrameCount;
 }

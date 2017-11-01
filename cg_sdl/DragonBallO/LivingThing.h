@@ -11,12 +11,17 @@ public:
 	LivingThing();
 	~LivingThing();
 	void AnimIdle();
+	void AnimDamage();
+	void AnimDeath();
 	void Update() override;
+	void Death();
+
 	bool TakeDamage(int damage); // Not sure why override doesnt work here...
 	void SetAttackingWeapon(Weapon *weapon);
+	void SetAnimDamage(Animation *anim);
 	void SetAnimIdle(Animation *anim);
+	void SetAnimDeath(Animation *anim);
 	void OnCollision(Entity *other) override;
-	void Death();
 
 
 	int attackRange;
@@ -24,12 +29,13 @@ public:
 	Weapon *attackingWeapon;
 
 
-	bool animIdleActive; 
 
 
 protected:
 	float mIdleTimer;
 	Animation *mAnimIdle;
+	Animation *mAnimDamage;
+	Animation *mAnimDeath;
 
 
 };

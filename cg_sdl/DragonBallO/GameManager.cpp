@@ -28,6 +28,8 @@ namespace {
 	Sprite boulder;
 	LivingThing target;
 		Animation targetIdle;
+		Animation targetDamage;
+		Animation targetDeath;
 	MoveTrigger moveTrigger;
 	Weapon playerWeapon;
 }
@@ -180,11 +182,25 @@ void InitEntities() {
 	//target.SetAnchorOffset({ 0, -13 }, 0);
 
 	//animation
-	target.animIdleActive = false;
+
 	target.SetAnimIdle(&targetIdle);
-	targetIdle.SetAnimSpeed(12);
+	targetIdle.active = true;
+	targetIdle.loops = true;
+	targetIdle.SetAnimSpeed(5);
 	targetIdle.AddSpriteClip(0);
-	targetIdle.AddSpriteClip(1);
+	
+	
+	target.SetAnimDamage(&targetDamage);
+	targetDamage.active = false;
+	targetDamage.loops = false;
+	targetDamage.SetAnimSpeed(10);
+	//targetDamage.AddSpriteClip(0);
+	targetDamage.AddSpriteClip(1);
+	targetDamage.AddSpriteClip(1);
+
+
+	target.SetAnimDeath(&targetDeath);
+	targetDeath.active = false;
 
 
 	//Health

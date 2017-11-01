@@ -36,7 +36,8 @@ void Weapon::OnCollision(Entity * other)
 		return;
 	}
 	//TODO: figure out how to acess other's LivingThing/Destructible Functions
-	printf("Weapon hit LivingThing. ");
+	printf("Weapon hit LivingThing.\n");
+
 
 
 

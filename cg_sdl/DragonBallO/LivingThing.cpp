@@ -24,14 +24,33 @@ LivingThing::~LivingThing()
 
 void LivingThing::AnimIdle()
 {
-	if (!animIdleActive) {
+
+	if (mAnimDamage->active || mAnimDeath->active ) {
 		return;
 	}
-	mSpriteClipIndex = mAnimIdle->UpdateSpriteClipIndex();
+	
+	mAnimIdle->UpdateSpriteClipIndex(mSpriteClipIndex);
+	
+}
+
+void LivingThing::AnimDamage()
+{
+	if (mAnimDeath->active)
+	{
+		return;
+	}
+	mAnimDamage->UpdateSpriteClipIndex(mSpriteClipIndex);
+}
+
+void LivingThing::AnimDeath()
+{
 }
 
 void LivingThing::Update()
 {
+	//Death();
+	//AnimDeath();
+	AnimDamage();
 	AnimIdle();
 	Sprite::Update();
 }
@@ -46,16 +65,26 @@ void LivingThing::SetAttackingWeapon(Weapon * weapon)
 	attackingWeapon = weapon;
 }
 
+void LivingThing::SetAnimDamage(Animation * anim)
+{
+	mAnimDamage = anim;
+}
+
 void LivingThing::SetAnimIdle(Animation* anim)
 {
 	mAnimIdle = anim;
+}
+
+void LivingThing::SetAnimDeath(Animation * anim)
+{
+	mAnimDeath = anim;
 }
 
 void LivingThing::OnCollision(Entity * other)
 {
 	if (typeid(*other) == typeid(weaponTypeHolder)) {
 	//	Destructible::TakeDamage(attackingWeapon->attackDamage);
-		animIdleActive = true;
+		mAnimDamage->active = true;
 	}
 
 
@@ -65,7 +94,7 @@ void LivingThing::OnCollision(Entity * other)
 void LivingThing::Death()
 {
 	if (!TakeDamage(0)) {
-
+		//animDeathActive = true;
 	}
 }
 
