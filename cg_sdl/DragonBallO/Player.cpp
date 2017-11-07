@@ -89,6 +89,7 @@ void Player::SetWeapon(Weapon *weapon, int range, int damage)
 	playerWeapon = weapon;
 	attackRange = range;
 	attackDamage = damage;
+	playerWeapon->SetDamage(damage);
 }
 
 
@@ -193,7 +194,7 @@ void Player::Move() {
 
 void Player::Attack() {
 	//Update attack variables
-	playerWeapon->SetAttack(attackRange, attackDamage);
+	playerWeapon->SetDamage(attackDamage);
 	//Update animation...
 	if (attackTimer > 0.f) {
 		SetCorners();

@@ -95,6 +95,7 @@ void InitEntities() {
 	//
 	playerWeapon.attacking = true;
 
+
 	//size
 	playerWeapon.SetSize(5,5);
 
@@ -187,21 +188,30 @@ void InitEntities() {
 	targetIdle.active = true;
 	targetIdle.loops = true;
 	targetIdle.SetAnimSpeed(5);
+
 	targetIdle.AddSpriteClip(0);
 	
 	
 	target.SetAnimDamage(&targetDamage);
 	targetDamage.active = false;
 	targetDamage.loops = false;
-	targetDamage.SetAnimSpeed(10);
-	//targetDamage.AddSpriteClip(0);
+	targetDamage.SetAnimSpeed(15);
+
 	targetDamage.AddSpriteClip(1);
 	targetDamage.AddSpriteClip(1);
+
 
 
 	target.SetAnimDeath(&targetDeath);
 	targetDeath.active = false;
+	targetDeath.loops = false;
+	targetDeath.SetAnimSpeed(7.5);
 
+	targetDeath.AddSpriteClip(1);
+	targetDeath.AddSpriteClip(2);
+	targetDeath.AddSpriteClip(3);
+	targetDeath.AddSpriteClip(4);
+	targetDeath.AddSpriteClip(5);
 
 	//Health
 	target.Destructible::SetHealth(3, 3);

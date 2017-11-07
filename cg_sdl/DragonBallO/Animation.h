@@ -14,7 +14,7 @@ public:
 
 	bool active;
 	bool loops;
-	bool hasPlayed;
+
 
 
 protected:

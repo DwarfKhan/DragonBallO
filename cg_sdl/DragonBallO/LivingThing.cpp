@@ -7,14 +7,12 @@ extern float gDeltaTime;
 extern Camera gCamera;
 
 
-float idleTimer = 0.0f;
-Weapon weaponTypeHolder;
+bool mIsAlive = true;
 
 
 
 LivingThing::LivingThing()
 {
-
 }
 
 
@@ -44,12 +42,13 @@ void LivingThing::AnimDamage()
 
 void LivingThing::AnimDeath()
 {
+	mAnimDeath->UpdateSpriteClipIndex(mSpriteClipIndex);
 }
 
 void LivingThing::Update()
 {
-	//Death();
-	//AnimDeath();
+	Death();
+	AnimDeath();
 	AnimDamage();
 	AnimIdle();
 	Sprite::Update();
@@ -57,6 +56,10 @@ void LivingThing::Update()
 
 bool LivingThing::TakeDamage(int damage)
 {
+	if (mHealth - damage > 0) {
+	mAnimDamage->active = true;
+	}
+	printf("HP: %d \n", (mHealth - damage));
 	return Destructible::TakeDamage(damage);
 }
 
@@ -82,10 +85,7 @@ void LivingThing::SetAnimDeath(Animation * anim)
 
 void LivingThing::OnCollision(Entity * other)
 {
-	if (typeid(*other) == typeid(weaponTypeHolder)) {
-	//	Destructible::TakeDamage(attackingWeapon->attackDamage);
-		mAnimDamage->active = true;
-	}
+
 
 
 	Entity::OnCollision(other);
@@ -93,8 +93,10 @@ void LivingThing::OnCollision(Entity * other)
 
 void LivingThing::Death()
 {
-	if (!TakeDamage(0)) {
-		//animDeathActive = true;
+	if ( (mHealth <= 0) && (mIsAlive) ) {
+		mAnimDeath->active = true;
+		mAnimIdle->active = false;
+		mIsAlive = false;
 	}
 }
 

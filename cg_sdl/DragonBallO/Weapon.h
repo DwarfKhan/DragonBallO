@@ -7,14 +7,13 @@ class Weapon :
 public:
 
 	bool attacking;
-	int attackRange;  //
 	int attackDamage; // these are set to the player's variables of the same name. 
 
 
 
 	Weapon();
 	~Weapon();
-	void SetAttack(int range, int damage);
+	void SetDamage(int damage);
 	void Update() override;
 	void OnCollision(Entity *other) override;
 

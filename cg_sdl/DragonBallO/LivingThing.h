@@ -32,7 +32,7 @@ public:
 
 
 protected:
-	float mIdleTimer;
+	bool mIsAlive = true;
 	Animation *mAnimIdle;
 	Animation *mAnimDamage;
 	Animation *mAnimDeath;

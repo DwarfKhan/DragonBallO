@@ -29,7 +29,6 @@ void Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
 	if (!active)
 	{
 		mTimer = 0;
-		hasPlayed = false;
 		mCurrentFrame = 0;
 		return;
 	}
@@ -40,25 +39,21 @@ void Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
 	if (loops)
 	{
 		spriteClipIndex = mSpriteClips[index];
+		return;
 	}
-	else if (!hasPlayed)
+	if (mCurrentFrame != index)
 	{
-		if (mCurrentFrame != index)
-		{
 			mCurrentFrame++;
 			spriteClipIndex = mSpriteClips[index];
-			printf("Current Frame: %d.\n", mCurrentFrame);
-			printf("Spriteclip: %d.\n", mSpriteClips[index]);
-			if (mCurrentFrame == mFrameCount)
-			{
-				hasPlayed = true;
-			}
+			//printf("Current Frame: %d.\n", mCurrentFrame);
+			//printf("Spriteclip: %d.\n", mSpriteClips[index]);
+		if (mCurrentFrame == mFrameCount)
+		{
+			spriteClipIndex = mSpriteClips[mFrameCount - 1];
+			active = false;
 		}
 	}
-	else
-	{
-		active = false;
-	}
+	
 
 
 }
