@@ -58,6 +58,7 @@ void Entity::ConfigureCollision(bool canPushBack, bool canBePushedBack,
 }
 
 void Entity::AddCollidableEntity(Entity &entity) {
+
 	mCollidableEntities.push_back(&entity);
 }
 

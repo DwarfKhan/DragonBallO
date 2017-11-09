@@ -80,6 +80,7 @@ void Player::Update() {
 	
 	
 	Move();
+	PrintPos();
 	Attack();
 	Sprite::Update();
 }
@@ -106,6 +107,15 @@ void Player::SetCorners()
 
 	topLeftCornerPos.x = mPos.x + mTopLeftCollOffset.x;
 	topLeftCornerPos.y = mPos.y + mTopLeftCollOffset.y;
+}
+
+void Player::PrintPos()
+{
+	if (!gSecondKeyDown) {
+		return;
+	}
+		printf("X: %f\n", mPos.x);
+		printf("Y: %f\n", mPos.y);
 }
 
 MyMath::Float2 Player::FindWeaponPos()

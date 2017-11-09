@@ -10,23 +10,29 @@ class LivingThing :
 public:
 	LivingThing();
 	~LivingThing();
-	void AnimIdle();
-	void AnimDamage();
-	void AnimDeath();
-	void Update() override;
-	void Death();
 
+	void Update() override;
+	void OnCollision(Entity *other) override;
+	void Animate();
+	void Death();
 	bool TakeDamage(int damage); // Not sure why override doesnt work here...
 	void SetAttackingWeapon(Weapon *weapon);
+
 	void SetAnimDamage(Animation *anim);
 	void SetAnimIdle(Animation *anim);
 	void SetAnimDeath(Animation *anim);
-	void OnCollision(Entity *other) override;
+	void SetAnimMoveUp(Animation *anim);
+	void SetAnimMoveDown(Animation *anim);
+	void SetAnimMoveLeft(Animation *anim);
+	void SetAnimMoveRight(Animation *anim);
 
 
+	enum AnimState {sIdle, sDeath, sDamage, sMoveUp, sMoveDown, sMoveLeft, sMoveRight};
 	int attackRange;
 	int attackDamage;
+	AnimState animState = sIdle;
 	Weapon *attackingWeapon;
+	
 
 
 
@@ -36,6 +42,10 @@ protected:
 	Animation *mAnimIdle;
 	Animation *mAnimDamage;
 	Animation *mAnimDeath;
+	Animation *mAnimMoveUp;
+	Animation *mAnimMoveDown;
+	Animation *mAnimMoveLeft;
+	Animation *mAnimMoveRight;
 
 
 };

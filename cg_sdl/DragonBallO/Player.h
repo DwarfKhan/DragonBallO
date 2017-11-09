@@ -11,6 +11,7 @@ public:
 	void Update() override;
 	void SetWeapon(Weapon *weapon, int range = 1, int damage = 1);
 	void SetCorners();
+	void PrintPos();
 	MyMath::Float2 FindWeaponPos();
 
 

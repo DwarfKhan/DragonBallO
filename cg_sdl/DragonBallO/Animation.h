@@ -9,11 +9,11 @@ public:
 	~Animation();
 	void AddSpriteClip(int spriteclip);
 	void SetAnimSpeed(float speed);
-	void UpdateSpriteClipIndex(int &spriteClipIndex);
+	bool UpdateSpriteClipIndex(int &spriteClipIndex); //returns true for completed animation, returns false for all other cases
 	int GetFrameCount();
 
-	bool active;
-	bool loops;
+	bool active = false;
+	bool loops = true;
 
 
 
@@ -22,7 +22,7 @@ protected:
 	int mFrameCount;
 	int mCurrentFrame;
 	float mSpeed;
-	vector<int> mSpriteClips;
+	vector<int> mSpriteClips; //must have at least 2 sprite clips to work
 
 
 

@@ -6,6 +6,7 @@
 #include "MoveTrigger.h"
 #include "LivingThing.h"
 #include "Weapon.h"
+#include "CollisionLayer.h"
 
 #define CAMERA_MODE Camera::Mode::PAN
 #define SHOW_COLLIDERS true
@@ -30,8 +31,20 @@ namespace {
 		Animation targetIdle;
 		Animation targetDamage;
 		Animation targetDeath;
+	LivingThing guard;
+		Animation guardIdle;
+		Animation guardDamage;
+		Animation guardDeath;
+		Animation guardMoveUp;
+		Animation guardMoveDown;
+		Animation guardMoveLeft;
+		Animation guardMoveRight;
 	MoveTrigger moveTrigger;
 	Weapon playerWeapon;
+
+	CollisionLayer lLivingThings;
+	CollisionLayer lWeapons;
+	CollisionLayer lMoveTriggers;
 }
 
 void InitEntities() {
@@ -77,12 +90,8 @@ void InitEntities() {
 	
 	//collision
 	player.ConfigureCollision(true, true, { 0, 14 }, { 35, 16 });
-
-	player.AddCollidableEntity(tree);
-	player.AddCollidableEntity(boulder);
-	player.AddCollidableEntity(moveTrigger);
-	player.AddCollidableEntity(target);
-
+	lLivingThings.AddEntity(player);
+	
 	//setWeapon
 	player.SetWeapon(&playerWeapon, 33);
 
@@ -100,8 +109,8 @@ void InitEntities() {
 	playerWeapon.SetSize(5,5);
 
 	//collision
-	playerWeapon.ConfigureCollision(true, true);
-	playerWeapon.AddCollidableEntity(target);
+	playerWeapon.ConfigureCollision(false, true);
+	lWeapons.AddEntity(playerWeapon);
 
 //END PLAYERWEAPON
 
@@ -121,6 +130,7 @@ void InitEntities() {
 
 	//collision
 	tree.ConfigureCollision(true, false);
+	lLivingThings.AddEntity(tree);
 
 //END TREE
 
@@ -140,7 +150,8 @@ void InitEntities() {
 
 	//collision
 	boulder.ConfigureCollision(false, true);
-	boulder.AddCollidableEntity(tree);
+	lLivingThings.AddEntity(boulder);
+
 
 //END BOULDER
 
@@ -154,6 +165,7 @@ void InitEntities() {
 
 	//collision
 	moveTrigger.ConfigureCollision(false, false);
+	lMoveTriggers.AddEntity(moveTrigger);
 
 	//destination
 	moveTrigger.SetMovePos({ 960, 200 });
@@ -186,32 +198,27 @@ void InitEntities() {
 
 	target.SetAnimIdle(&targetIdle);
 	targetIdle.active = true;
-	targetIdle.loops = true;
 	targetIdle.SetAnimSpeed(5);
-
+	targetIdle.AddSpriteClip(0);
 	targetIdle.AddSpriteClip(0);
 	
 	
 	target.SetAnimDamage(&targetDamage);
-	targetDamage.active = false;
 	targetDamage.loops = false;
 	targetDamage.SetAnimSpeed(15);
-
 	targetDamage.AddSpriteClip(1);
 	targetDamage.AddSpriteClip(1);
-
 
 
 	target.SetAnimDeath(&targetDeath);
-	targetDeath.active = false;
 	targetDeath.loops = false;
 	targetDeath.SetAnimSpeed(7.5);
-
 	targetDeath.AddSpriteClip(1);
 	targetDeath.AddSpriteClip(2);
 	targetDeath.AddSpriteClip(3);
 	targetDeath.AddSpriteClip(4);
 	targetDeath.AddSpriteClip(5);
+
 
 	//Health
 	target.Destructible::SetHealth(3, 3);
@@ -224,16 +231,118 @@ void InitEntities() {
 
 	//collision
 	target.ConfigureCollision(true, false);
-
-	target.AddCollidableEntity(playerWeapon);
+	lLivingThings.AddEntity(target);
+	
 
 //END TARGET
 
+// GUARD
+	//health
+	guard.Destructible::SetHealth(5,5);
+	//Path name
+	guard.SetTexturePath("textures/Guard.png");
+	//Load Texture
+	sdlInit.LoadTexture(guard);
+	//Init sprite sheet
+	guard.InitSpriteSheet(0, 11, 6);
+	//position
+	guard.SetPosition({116,220});
+	//size
+	guard.SetSize(60, 60);
+	//collision
+	guard.ConfigureCollision(true, false, { 0,17 }, {26,0});
+	lLivingThings.AddEntity(guard);
+	//Spriteclips
+	guard.SetSpriteClip(0, 1, 25, 25, 0);
+	guard.SetSpriteClip(25, 1, 25, 25, 1);
+	guard.SetSpriteClip(50, 1, 25, 25, 2);
+	guard.SetSpriteClip(75, 1, 25, 25, 3);
+	guard.SetSpriteClip(0, 26, 25, 25, 4);
+	guard.SetSpriteClip(25, 26, 25, 25, 5);
+	guard.SetSpriteClip(50, 26, 25, 25, 6);
+	guard.SetSpriteClip(75, 26, 25, 25, 7);
+	guard.SetSpriteClip(0, 51, 25, 25, 8);
+	guard.SetSpriteClip(25, 51, 25, 25, 9);
+	guard.SetSpriteClip(50, 51, 25, 25, 10);
+	guard.SetSpriteClip(75, 51, 25, 25, 11);
+	guard.SetSpriteClip(0, 76, 25, 25, 12);
+	guard.SetSpriteClip(25, 76, 25, 25, 13);
+	guard.SetSpriteClip(50, 76, 25, 25, 14);
+	guard.SetSpriteClip(75, 76, 25, 25, 15);
+	guard.SetSpriteClip(0, 101, 25, 25, 16);
+	guard.SetSpriteClip(25, 101, 25, 25, 17);
+	guard.SetSpriteClip(50, 101, 25, 25, 18);
+	guard.SetSpriteClip(75, 101, 25, 25, 19);
+	guard.SetSpriteClip(0, 126, 25, 25, 20);
+	guard.SetSpriteClip(25, 126, 25, 25, 21);
+	guard.SetSpriteClip(50, 126, 25, 25, 22);
+	guard.SetSpriteClip(75, 126, 25, 25, 23);
+	guard.SetSpriteClip(175, 101, 25, 25, 24);
+	guard.SetSpriteClip(250, 26, 25, 25, 25);
+
+	//Anchor offsets
+	guard.SetAnchorOffset({-26,0}, 19);
+	guard.SetAnchorOffset({-26,0}, 23);
+
+	//Animation
+	guard.SetAnimIdle(&guardIdle);
+	guardIdle.active = true;
+	guardIdle.SetAnimSpeed(5);
+	guardIdle.AddSpriteClip(16);
+	guardIdle.AddSpriteClip(16);
 	
+	guard.SetAnimDamage(&guardDamage);
+	guardDamage.loops = false;
+	guardDamage.SetAnimSpeed(15);
+	guardDamage.AddSpriteClip(24);
+	guardDamage.AddSpriteClip(24);
+	guardDamage.AddSpriteClip(24);
+
+	guard.SetAnimDeath(&guardDeath);
+	guardDeath.loops = false;
+	guardDeath.SetAnimSpeed(15);
+	guardDeath.AddSpriteClip(25);
+	guardDeath.AddSpriteClip(25);
+
+	guard.SetAnimMoveUp(&guardMoveUp);
+	guardMoveUp.loops = true;
+	guardMoveUp.SetAnimSpeed(10);
+	guardMoveUp.AddSpriteClip(20);
+	guardMoveUp.AddSpriteClip(21);
+
+	guard.SetAnimMoveDown(&guardMoveDown);
+	guardMoveDown.loops = true;
+	guardMoveDown.SetAnimSpeed(10);
+	guardMoveDown.AddSpriteClip(8);
+	guardMoveDown.AddSpriteClip(9);
+	
+	guard.SetAnimMoveLeft(&guardMoveLeft);
+	guardMoveLeft.loops = true;
+	guardMoveLeft.SetAnimSpeed(10);
+	guardMoveLeft.AddSpriteClip(2);
+	guardMoveLeft.AddSpriteClip(3);
+
+	guard.SetAnimMoveRight(&guardMoveRight);
+	guardMoveRight.loops = true;
+	guardMoveRight.SetAnimSpeed(10);
+	guardMoveRight.AddSpriteClip(12);
+	guardMoveRight.AddSpriteClip(13);
+
+// END GUARD 
+
+// Must come after all entities have been added to their layers
+	lLivingThings.CollideWith(player);
+	lLivingThings.CollideWith(boulder);
+	lLivingThings.CollideWith(guard);
+	lLivingThings.CollideWith(target);
+	lLivingThings.CollideWith(tree);
+	lLivingThings.CollideWith(playerWeapon);
+	lMoveTriggers.CollideWith(player);
 
 	//TODO: Don't hard-code this...
 	gWorld.InitWorldGrid({ 0, 70 - 35, 14, 70 - 16});
 }
+
 
 bool GameManager::Init(){
 	bool initSuccess = sdlInit.Setup();
@@ -249,6 +358,7 @@ void GameManager::Cleanup(){
 	sdlInit.CleanupSprite(tree);
 	sdlInit.CleanupSprite(boulder);
 	sdlInit.CleanupSprite(target);
+	sdlInit.CleanupSprite(guard);
 	sdlInit.Cleanup();
 }
 
@@ -257,6 +367,7 @@ void GameManager::Update() {
 	tree.Update();
 	target.Update();
 	boulder.Update();
+	guard.Update();
 	player.Update();
 
 	//Needs to come last...
@@ -272,6 +383,7 @@ void GameManager::Render(){
 
 	sdlInit.DrawSprite(tree);
 	sdlInit.DrawSprite(target);
+	sdlInit.DrawSprite(guard);
 	sdlInit.DrawSprite(boulder);
 	sdlInit.DrawSprite(player);
 
@@ -283,5 +395,6 @@ void GameManager::Render(){
 		sdlInit.DrawEntityCollider(boulder);
 		sdlInit.DrawEntityCollider(player);
 		sdlInit.DrawEntityCollider(playerWeapon);
+		sdlInit.DrawEntityCollider(guard);
 	}
 }
