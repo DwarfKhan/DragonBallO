@@ -287,9 +287,9 @@ void InitEntities() {
 	//Animation
 	guard.SetAnimIdle(&guardIdle);
 	guardIdle.active = true;
-	guardIdle.SetAnimSpeed(5);
+	guardIdle.SetAnimSpeed(2.5);
 	guardIdle.AddSpriteClip(16);
-	guardIdle.AddSpriteClip(16);
+	
 	
 	guard.SetAnimDamage(&guardDamage);
 	guardDamage.loops = false;
@@ -300,9 +300,9 @@ void InitEntities() {
 
 	guard.SetAnimDeath(&guardDeath);
 	guardDeath.loops = false;
-	guardDeath.SetAnimSpeed(15);
+	guardDeath.SetAnimSpeed(7.5);
 	guardDeath.AddSpriteClip(25);
-	guardDeath.AddSpriteClip(25);
+
 
 	guard.SetAnimMoveUp(&guardMoveUp);
 	guardMoveUp.loops = true;

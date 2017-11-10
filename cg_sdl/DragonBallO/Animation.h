@@ -22,7 +22,7 @@ protected:
 	int mFrameCount;
 	int mCurrentFrame;
 	float mSpeed;
-	vector<int> mSpriteClips; //must have at least 2 sprite clips to work
+	vector<int> mSpriteClips;
 
 
 

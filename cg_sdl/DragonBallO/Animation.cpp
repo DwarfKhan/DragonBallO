@@ -31,8 +31,15 @@ bool Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
 		return false;
 	}
 
+	// one frame animations get buggy, so this doubles one frame animations
+	if (mFrameCount == 1)
+	{
+		AddSpriteClip(mSpriteClips[0]);
+		SetAnimSpeed(mSpeed * 2);
+	}
+	
 	mTimer += mSpeed * gDeltaTime;
-	int index = (int)mTimer % mFrameCount;
+	int index = (int)mTimer % mFrameCount; 
 
 	if (loops)
 	{
