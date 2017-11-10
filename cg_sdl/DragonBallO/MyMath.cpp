@@ -1,4 +1,7 @@
 #include "MyMath.h"
+#include <random>
+#include <time.h>
+
 
 int MyMath::Abs(int num) {
 	return num < 0 ? -num : num;
@@ -15,6 +18,22 @@ float MyMath::Lerp(float start, float end, float time) {
 
 	float value = start + ((end - start) * time);
 	return value;
+}
+
+//returns a random int between min and max
+int MyMath::DiceRoll(int min, int max)
+{
+	if (min > max)
+	{
+		return 0;
+	}
+	if (min == max)
+	{
+		return min;
+	}
+
+	srand(time(0));
+	return rand() % ((max - min) + 1) + min;
 }
 
 int MyMath::Max(int leftNum, int rightNum) {

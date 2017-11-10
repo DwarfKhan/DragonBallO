@@ -13,6 +13,7 @@ public:
 
 	void Update() override;
 	void OnCollision(Entity *other) override;
+	void Move();
 	void Animate();
 	void Death();
 	bool TakeDamage(int damage); // Not sure why override doesnt work here...
@@ -27,10 +28,13 @@ public:
 	void SetAnimMoveRight(Animation *anim);
 
 
-	enum AnimState {sIdle, sDeath, sDamage, sMoveUp, sMoveDown, sMoveLeft, sMoveRight};
+	enum AnimState {sIdle, sDeath, sDamage, sMove};
+	AnimState animState = sIdle;
+	enum MoveState {sNotMoving, sDirectFollow, sRandom};
+	MoveState moveState = sNotMoving;
+
 	int attackRange;
 	int attackDamage;
-	AnimState animState = sIdle;
 	Weapon *attackingWeapon;
 	
 
@@ -38,6 +42,13 @@ public:
 
 
 protected:
+
+	float randomNavTimer = 0;
+	float randomNavMaxTime = 1;
+
+	enum MoveDir { up, down, left, right, none };
+	MoveDir moveDir;
+
 	bool mIsAlive = true;
 	Animation *mAnimIdle;
 	Animation *mAnimDamage;

@@ -78,7 +78,6 @@ void Player::Update() {
 	}
 	
 	
-	
 	Move();
 	PrintPos();
 	Attack();

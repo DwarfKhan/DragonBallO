@@ -36,4 +36,8 @@ namespace MyMath {
 	float Clamp(float value, float min, float max);
 
 	float Lerp(float start, float end, float time);
+
+	int DiceRoll(int min, int max);
+	
+
 }

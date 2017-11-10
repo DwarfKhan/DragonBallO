@@ -24,7 +24,7 @@ void Animation::SetAnimSpeed(float speed)
 	mSpeed = speed;
 }
 
-bool Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
+bool Animation::UpdateSpriteClipIndex(int &spriteClipIndex) //returns true for a finished non-looping animation
 {
 	if (!active)
 	{
@@ -38,6 +38,7 @@ bool Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
 		SetAnimSpeed(mSpeed * 2);
 	}
 	
+	//math for finding which frame needs to be displayed
 	mTimer += mSpeed * gDeltaTime;
 	int index = (int)mTimer % mFrameCount; 
 
@@ -46,13 +47,16 @@ bool Animation::UpdateSpriteClipIndex(int &spriteClipIndex)
 		spriteClipIndex = mSpriteClips[index];
 		return false;
 	}
+
 	if (mCurrentFrame != index)
 	{
 			mCurrentFrame++;
 			spriteClipIndex = mSpriteClips[index];
 			//printf("Current Frame: %d.\n", mCurrentFrame);
 			//printf("Spriteclip: %d.\n", mSpriteClips[index]);
-		if (mCurrentFrame >= mFrameCount)
+
+			
+		if (mCurrentFrame >= mFrameCount) // if the animation is over end animation and reset timing values
 		{
 			spriteClipIndex = mSpriteClips[mFrameCount - 1];
 			active = false;

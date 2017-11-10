@@ -250,8 +250,13 @@ void InitEntities() {
 	//size
 	guard.SetSize(60, 60);
 	//collision
-	guard.ConfigureCollision(true, false, { 0,17 }, {26,0});
+	guard.ConfigureCollision(true, true, { 0,17 }, {26,0});
 	lLivingThings.AddEntity(guard);
+
+	//navigation
+
+	guard.moveState = LivingThing::MoveState(2);
+
 	//Spriteclips
 	guard.SetSpriteClip(0, 1, 25, 25, 0);
 	guard.SetSpriteClip(25, 1, 25, 25, 1);
@@ -305,26 +310,34 @@ void InitEntities() {
 
 
 	guard.SetAnimMoveUp(&guardMoveUp);
-	guardMoveUp.loops = true;
+	guardMoveUp.loops = false;
 	guardMoveUp.SetAnimSpeed(10);
+	guardMoveUp.AddSpriteClip(20);
+	guardMoveUp.AddSpriteClip(21);
 	guardMoveUp.AddSpriteClip(20);
 	guardMoveUp.AddSpriteClip(21);
 
 	guard.SetAnimMoveDown(&guardMoveDown);
-	guardMoveDown.loops = true;
+	guardMoveDown.loops = false;
 	guardMoveDown.SetAnimSpeed(10);
+	guardMoveDown.AddSpriteClip(8);
+	guardMoveDown.AddSpriteClip(9);
 	guardMoveDown.AddSpriteClip(8);
 	guardMoveDown.AddSpriteClip(9);
 	
 	guard.SetAnimMoveLeft(&guardMoveLeft);
-	guardMoveLeft.loops = true;
+	guardMoveLeft.loops = false;
 	guardMoveLeft.SetAnimSpeed(10);
+	guardMoveLeft.AddSpriteClip(2);
+	guardMoveLeft.AddSpriteClip(3);
 	guardMoveLeft.AddSpriteClip(2);
 	guardMoveLeft.AddSpriteClip(3);
 
 	guard.SetAnimMoveRight(&guardMoveRight);
-	guardMoveRight.loops = true;
+	guardMoveRight.loops = false;
 	guardMoveRight.SetAnimSpeed(10);
+	guardMoveRight.AddSpriteClip(12);
+	guardMoveRight.AddSpriteClip(13);
 	guardMoveRight.AddSpriteClip(12);
 	guardMoveRight.AddSpriteClip(13);
 
