@@ -18,6 +18,7 @@ public:
 	void Death();
 	bool TakeDamage(int damage); // Not sure why override doesnt work here...
 	void SetAttackingWeapon(Weapon *weapon);
+	void SetFollowTarget(Entity *target);
 
 	void SetAnimDamage(Animation *anim);
 	void SetAnimIdle(Animation *anim);
@@ -31,7 +32,8 @@ public:
 	enum AnimState {sIdle, sDeath, sDamage, sMove};
 	AnimState animState = sIdle;
 	enum MoveState {sNotMoving, sDirectFollow, sRandom};
-	MoveState moveState = sNotMoving;
+	MoveState defaultMoveState = sNotMoving;
+	MoveState moveState;
 
 	int attackRange;
 	int attackDamage;
@@ -58,6 +60,8 @@ protected:
 	Animation *mAnimMoveLeft;
 	Animation *mAnimMoveRight;
 
+	Entity * mFollowTarget;
+	MyMath::Float2 mFollowVector;
 
 };
 

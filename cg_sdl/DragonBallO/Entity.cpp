@@ -14,6 +14,11 @@ void Entity::SetPosition(Float2 pos) {
 	mPos = pos;
 }
 
+Float2 Entity::GetPos()
+{
+	return mPos;
+}
+
 void Entity::SetSize(int width, int height) {
 	mSize = { width, height };
 }

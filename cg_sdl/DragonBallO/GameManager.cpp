@@ -247,6 +247,8 @@ void InitEntities() {
 	guard.InitSpriteSheet(0, 11, 6);
 	//position
 	guard.SetPosition({116,220});
+	//speed
+	guard.SetMoveSpeed(0.5);
 	//size
 	guard.SetSize(60, 60);
 	//collision
@@ -311,7 +313,7 @@ void InitEntities() {
 
 	guard.SetAnimMoveUp(&guardMoveUp);
 	guardMoveUp.loops = false;
-	guardMoveUp.SetAnimSpeed(10);
+	guardMoveUp.SetAnimSpeed(20);
 	guardMoveUp.AddSpriteClip(20);
 	guardMoveUp.AddSpriteClip(21);
 	guardMoveUp.AddSpriteClip(20);
@@ -319,7 +321,7 @@ void InitEntities() {
 
 	guard.SetAnimMoveDown(&guardMoveDown);
 	guardMoveDown.loops = false;
-	guardMoveDown.SetAnimSpeed(10);
+	guardMoveDown.SetAnimSpeed(20);
 	guardMoveDown.AddSpriteClip(8);
 	guardMoveDown.AddSpriteClip(9);
 	guardMoveDown.AddSpriteClip(8);
@@ -327,7 +329,7 @@ void InitEntities() {
 	
 	guard.SetAnimMoveLeft(&guardMoveLeft);
 	guardMoveLeft.loops = false;
-	guardMoveLeft.SetAnimSpeed(10);
+	guardMoveLeft.SetAnimSpeed(20);
 	guardMoveLeft.AddSpriteClip(2);
 	guardMoveLeft.AddSpriteClip(3);
 	guardMoveLeft.AddSpriteClip(2);
@@ -335,7 +337,7 @@ void InitEntities() {
 
 	guard.SetAnimMoveRight(&guardMoveRight);
 	guardMoveRight.loops = false;
-	guardMoveRight.SetAnimSpeed(10);
+	guardMoveRight.SetAnimSpeed(20);
 	guardMoveRight.AddSpriteClip(12);
 	guardMoveRight.AddSpriteClip(13);
 	guardMoveRight.AddSpriteClip(12);

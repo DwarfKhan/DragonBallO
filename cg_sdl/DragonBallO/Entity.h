@@ -23,6 +23,7 @@ public:
 	virtual void Update();
 
 	void SetPosition(Float2 pos);
+	Float2 GetPos();
 	void SetSize(int width, int height);
 	MyMath::Int2 GetSize();
 	void SetMoveSpeed(float moveSpeed);

@@ -2,6 +2,16 @@
 #include <random>
 #include <time.h>
 
+extern float gRandomizer;
+
+MyMath::Float2 operator-(MyMath::Float2 self, MyMath::Float2 other) {
+	MyMath::Float2 ans = self;
+	ans.x -= other.x;
+	ans.y -= other.y;
+	return ans;
+
+
+}
 
 int MyMath::Abs(int num) {
 	return num < 0 ? -num : num;
@@ -31,9 +41,19 @@ int MyMath::DiceRoll(int min, int max)
 	{
 		return min;
 	}
-
-	srand(time(0));
+	gRandomizer++;
+	srand(gRandomizer);
 	return rand() % ((max - min) + 1) + min;
+}
+
+void MyMath::Normalize(Float2 &vector)
+{
+	float cSq = (vector.x * vector.x) + (vector.y * vector.y);
+	float length = Abs((float)pow(cSq, .5));
+	MyMath::Float2 ans;
+	ans.x = vector.x / length;
+	ans.y = vector.y / length;
+	vector = ans;
 }
 
 int MyMath::Max(int leftNum, int rightNum) {

@@ -39,5 +39,6 @@ namespace MyMath {
 
 	int DiceRoll(int min, int max);
 	
+	void Normalize(Float2 &vector);
 
 }

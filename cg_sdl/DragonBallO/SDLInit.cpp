@@ -23,6 +23,9 @@ SDL_Renderer* gRenderer = NULL;
 //In milliseconds...
 float gDeltaTime = 0.f;
 
+//used for true random numbers
+float gRandomizer = 0.f;
+
 //Checked in main...
 bool gQuitGame = false;
 

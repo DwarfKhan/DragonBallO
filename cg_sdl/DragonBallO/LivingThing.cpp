@@ -104,6 +104,13 @@ void LivingThing::SetAttackingWeapon(Weapon * weapon)
 	attackingWeapon = weapon;
 }
 
+void LivingThing::SetFollowTarget(Entity * target)
+{
+
+	mFollowTarget = target;
+
+}
+
 void LivingThing::SetAnimDamage(Animation * anim)
 {
 	mAnimDamage = anim;
@@ -154,11 +161,13 @@ void LivingThing::Move()
 		return;
 	}
 
+	MyMath::Float2 difPos;
 
 	switch (moveState) {
 
 	case sNotMoving:
 		moveDir = none;
+		mFollowVector = { 0,0 };
 		return;
 		break;
 
@@ -166,49 +175,20 @@ void LivingThing::Move()
 
 
 		randomNavTimer -= gDeltaTime;
-		printf("navTimer: %f\n", randomNavTimer);
+		//printf("navTimer: %f\n", randomNavTimer);
 
 		if (randomNavTimer <= 0)
 		{
 		//choose a new direction
-			switch (DiceRoll(0, 8)) {
-
-			case 0://stand still
-				moveDir = none;
-				break;
-
-			case 5://stand still
-				moveDir = none;
-				break;
-
-			case 6://stand still
-				moveDir = none;
-				break;
-
-			case 7://stand still
-				moveDir = none;
-				break;
-
-			case 8://stand still
-				moveDir = none;
-				break;
-
-			case 1:
-				moveDir = up;
-				break;
-
-			case 2:
-				moveDir = down;
-				break;
-
-			case 3:
-				moveDir = left;
-				break;
-
-			case 4:
-				moveDir = right;
-				break;
+			if(DiceRoll(0, 1)) {
+				mFollowVector = { 0,0 };
 			}
+			else {
+				mFollowVector.x = ((DiceRoll(0, 200) / 100) - 1);
+				mFollowVector.y = ((DiceRoll(0, 200) / 100) - 1);
+				MyMath::Normalize(mFollowVector);
+			}
+
 			//reset timer
 			float newTime = (float)DiceRoll(0, randomNavMaxTime);
 				randomNavTimer = newTime;
@@ -217,53 +197,65 @@ void LivingThing::Move()
 
 		break;
 
+	case sDirectFollow:
+
+		if (&mFollowTarget == nullptr) {
+			printf("No target selected to follow, returning to default movestate.\n");
+			moveState = defaultMoveState;
+		}
+
+		difPos.x = mFollowTarget->GetPos().x - mPos.x;
+		difPos.y = mFollowTarget->GetPos().y - mPos.y;
+
+		break;
+
+	default:
+		printf("Invalid movestate, returning to default movestate.\n");
+		moveState = defaultMoveState;
+
+		break;
+
 	}
 
 
-	printf("moving: %d", moveDir);
+
 	MyMath::Float2 newPos = mPos;
 		AnimState tempState;
-	switch (moveDir) {
-	case none:
-		mFacingDirection = 1;
-		tempState = sIdle;
-		mAnimIdle->active = true;
-		break;
 
-	case up:
-		mFacingDirection = 0;
-		tempState = sMove;
+		//Display idle if not moving
+		if (mFollowVector.x == 0 && mFollowVector.y == 0)
+		{
+			tempState = sIdle;
+		}
+		else {
+			tempState = sMove;
+			newPos.x = mFollowVector.x * mMoveSpeed * gDeltaTime;
+			newPos.y = mFollowVector.y * mMoveSpeed * gDeltaTime;
+		}
 
-		newPos.y -= (gDeltaTime * mMoveSpeed);
-		break;
+		//Decide on facingDirection
+		if (.1 + Abs(mFollowVector.x) >= Abs(mFollowVector.y)) {//Further in x distance
+			if (mFollowVector.x >= 0) {//right
+				mFacingDirection = 3;
+			}
+			else {//left
+				mFacingDirection = 2;
+			}
+		}
+		else {
+			if (mFollowVector.y >=0) {//Down
+				mFacingDirection = 1;
+			}
+			else {
+				mFacingDirection = 0;
+			}
+		}
+		//damage animation takes priority over move animation
+		if (!(animState == sDamage && mAnimDamage->active == true)) {
+			animState = tempState;
+		}
 
-	case down:
-		mFacingDirection = 1;
-		tempState = sMove;
-
-		newPos.y += (gDeltaTime * mMoveSpeed);
-		break;
-
-	case left:
-		mFacingDirection = 2;
-		tempState = sMove;
-
-		newPos.x -= (gDeltaTime * mMoveSpeed);
-		break;
-
-	case right:
-		mFacingDirection = 3;
-		tempState = sMove;
-
-		newPos.x += (gDeltaTime * mMoveSpeed);
-		break;
-	}
-	mPos = newPos;
-
-	//damage animation takes priority over move animation
-	if (!(animState == sDamage && mAnimDamage->active == true)) {
-		animState = tempState;
-	}
+		mPos = newPos;
 }
 
 void LivingThing::Death()
