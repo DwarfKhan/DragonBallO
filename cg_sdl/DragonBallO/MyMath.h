@@ -13,6 +13,54 @@ namespace MyMath {
 		Float2(float x, float y) : x(x), y(y) {}
 		float x{0.f};
 		float y{0.f};
+
+		void operator=(Float2 other) {
+			x = other.x;
+			y = other.y;
+		}
+
+		void operator+=(Float2 other) {
+			x += other.x;
+			y += other.y;
+		}
+		void operator-=(Float2 other) {
+			x -= other.x;
+			y -= other.y;
+		}
+
+		void operator=(float other) {
+			x = other;
+			y = other;
+		}
+
+		Float2 operator+(Float2 other) {
+			Float2 ans = { x,y };
+			ans.x += other.x;
+			ans.y += other.y;
+			return ans;
+		}
+
+		Float2 operator-(Float2 other) {
+			Float2 ans = {x,y};
+			ans.x -= other.x;
+			ans.y -= other.y;
+			return ans;
+		}
+		Float2 operator*(float other) {
+			Float2 ans = { x,y };
+			ans.x *= other;
+			ans.y *= other;
+			return ans;
+		}
+		Float2 operator/(float other) {
+			Float2 ans = { x,y };
+			ans.x /= other;
+			ans.y /= other;
+			return ans;
+		}
+
+
+
 	};
 	struct RectBoundary {
 		RectBoundary(){}

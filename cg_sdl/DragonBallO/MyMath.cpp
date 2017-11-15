@@ -3,15 +3,9 @@
 #include <time.h>
 
 extern float gRandomizer;
-
-MyMath::Float2 operator-(MyMath::Float2 self, MyMath::Float2 other) {
-	MyMath::Float2 ans = self;
-	ans.x -= other.x;
-	ans.y -= other.y;
-	return ans;
+using Float2 = MyMath::Float2;
 
 
-}
 
 int MyMath::Abs(int num) {
 	return num < 0 ? -num : num;
@@ -54,7 +48,7 @@ void MyMath::Normalize(Float2 &vector)
 	MyMath::Float2 ans;
 	ans.x = vector.x / length;
 	ans.y = vector.y / length;
-	printf("Normalize. Starting x: %f, y: %f. Normalized x: %f, y: %f.\n", vector.x, vector.y, ans.x, ans.y);
+	//printf("Normalize. Starting x: %f, y: %f. Normalized x: %f, y: %f.\n", vector.x, vector.y, ans.x, ans.y);
 	vector = ans;
 }
 

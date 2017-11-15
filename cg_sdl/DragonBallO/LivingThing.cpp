@@ -181,14 +181,15 @@ void LivingThing::Move()
 		{
 		//choose a new direction
 			if(DiceRoll(0, 1) == 0) {
-				mFollowVector = { 0,0 };
+				mFollowVector = 0;
 			}
 			else {
+				//set x and y to random values between -1 and 1
 				mFollowVector.x = (((float)DiceRoll(0, 200) / 100.0f) - 1.0f);
 				mFollowVector.y = (((float)DiceRoll(0, 200) / 100.0f) - 1.0f);
-				printf("mfollow before norm x: %f, y: %f.\n", mFollowVector.x, mFollowVector.y);
+
+				//Normalize (set length of follow vector to 1)
 				MyMath::Normalize(mFollowVector);
-				printf("mfollow after norm x: %f, y: %f.\n",mFollowVector.x,mFollowVector.y);
 			}
 
 			//reset timer
@@ -206,8 +207,7 @@ void LivingThing::Move()
 			moveState = defaultMoveState;
 		}
 
-		difPos.x = mFollowTarget->GetPos().x - mPos.x;
-		difPos.y = mFollowTarget->GetPos().y - mPos.y;
+		difPos = mFollowTarget->GetPos() - mPos;
 
 		break;
 
@@ -232,8 +232,7 @@ void LivingThing::Move()
 		else {
 			tempState = sMove;
 			//printf("newPos before speed/time x: %f, y: %f.\n", newPos.x, newPos.y);
-			newPos.x += mFollowVector.x * mMoveSpeed * gDeltaTime;
-			newPos.y += mFollowVector.y * mMoveSpeed * gDeltaTime;
+			newPos += (mFollowVector * mMoveSpeed * gDeltaTime);
 			//printf("newPos after speed/time x: %f, y: %f.\n", newPos.x, newPos.y);
 
 		}
