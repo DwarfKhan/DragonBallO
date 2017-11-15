@@ -246,9 +246,9 @@ void InitEntities() {
 	//Init sprite sheet
 	guard.InitSpriteSheet(0, 11, 6);
 	//position
-	guard.SetPosition({116,220});
+	guard.SetPosition({816,220});
 	//speed
-	guard.SetMoveSpeed(0.5);
+	guard.SetMoveSpeed(70.0f);
 	//size
 	guard.SetSize(60, 60);
 	//collision

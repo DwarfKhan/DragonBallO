@@ -180,13 +180,15 @@ void LivingThing::Move()
 		if (randomNavTimer <= 0)
 		{
 		//choose a new direction
-			if(DiceRoll(0, 1)) {
+			if(DiceRoll(0, 1) == 0) {
 				mFollowVector = { 0,0 };
 			}
 			else {
-				mFollowVector.x = ((DiceRoll(0, 200) / 100) - 1);
-				mFollowVector.y = ((DiceRoll(0, 200) / 100) - 1);
+				mFollowVector.x = (((float)DiceRoll(0, 200) / 100.0f) - 1.0f);
+				mFollowVector.y = (((float)DiceRoll(0, 200) / 100.0f) - 1.0f);
+				printf("mfollow before norm x: %f, y: %f.\n", mFollowVector.x, mFollowVector.y);
 				MyMath::Normalize(mFollowVector);
+				printf("mfollow after norm x: %f, y: %f.\n",mFollowVector.x,mFollowVector.y);
 			}
 
 			//reset timer
@@ -229,8 +231,11 @@ void LivingThing::Move()
 		}
 		else {
 			tempState = sMove;
-			newPos.x = mFollowVector.x * mMoveSpeed * gDeltaTime;
-			newPos.y = mFollowVector.y * mMoveSpeed * gDeltaTime;
+			//printf("newPos before speed/time x: %f, y: %f.\n", newPos.x, newPos.y);
+			newPos.x += mFollowVector.x * mMoveSpeed * gDeltaTime;
+			newPos.y += mFollowVector.y * mMoveSpeed * gDeltaTime;
+			//printf("newPos after speed/time x: %f, y: %f.\n", newPos.x, newPos.y);
+
 		}
 
 		//Decide on facingDirection

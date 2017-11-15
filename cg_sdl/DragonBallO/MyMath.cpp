@@ -42,7 +42,8 @@ int MyMath::DiceRoll(int min, int max)
 		return min;
 	}
 	gRandomizer++;
-	srand(gRandomizer);
+	srand(gRandomizer * time(NULL));
+	//printf("DiceRoll. Min: %d. Max: %d. Returning: %d.\n", min, max, (rand() % ((max - min) + 1) + min));
 	return rand() % ((max - min) + 1) + min;
 }
 
@@ -53,6 +54,7 @@ void MyMath::Normalize(Float2 &vector)
 	MyMath::Float2 ans;
 	ans.x = vector.x / length;
 	ans.y = vector.y / length;
+	printf("Normalize. Starting x: %f, y: %f. Normalized x: %f, y: %f.\n", vector.x, vector.y, ans.x, ans.y);
 	vector = ans;
 }
 
