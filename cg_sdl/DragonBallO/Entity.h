@@ -24,12 +24,15 @@ public:
 
 	void SetPosition(Float2 pos);
 	Float2 GetPos();
+	Float2 GetCenterPos();
 	void SetSize(int width, int height);
+	void SetSize(Int2 size);
 	MyMath::Int2 GetSize();
 	void SetMoveSpeed(float moveSpeed);
 
 	void SetFacingDirection(int direction);// 0 is up, 1 is down, 2 is left, 3 is right
 	int GetFacingDirection();
+
 
 	void ConfigureCollision(bool canPushBack, bool canBePushedBack,
 		Int2 topLeftCollOffset = { 0, 0 }, Int2 bottomRightCollOffset = { 0, 0 });

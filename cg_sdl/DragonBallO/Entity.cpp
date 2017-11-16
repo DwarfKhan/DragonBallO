@@ -19,8 +19,25 @@ Float2 Entity::GetPos()
 	return mPos;
 }
 
+Float2 Entity::GetCenterPos()
+{
+	Float2 center;
+	center.x = (
+		(mPos.x + mSize.x - mBottomRightCollOffset.x) + (mPos.x + mTopLeftCollOffset.x)
+		) / 2;
+	center.y = (
+		(mPos.y + mSize.y - mBottomRightCollOffset.y) + (mPos.y + mTopLeftCollOffset.y)
+		) / 2;
+	return center;
+}
+
 void Entity::SetSize(int width, int height) {
 	mSize = { width, height };
+}
+
+void Entity::SetSize(Int2 size)
+{
+	mSize = size;
 }
 
 MyMath::Int2 Entity::GetSize()

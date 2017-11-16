@@ -12,6 +12,7 @@ public:
 	void SetWeapon(Weapon *weapon, int range = 1, int damage = 1);
 	void SetCorners();
 	void PrintPos();
+	void OnProxCollision(Entity *other);
 	MyMath::Float2 FindWeaponPos();
 
 

@@ -7,6 +7,12 @@ namespace MyMath {
 		Int2(int x, int y) : x(x), y(y) {}
 		int x{0};
 		int y{0};
+		Int2 operator/(int other) {
+			Int2 ans;
+			ans.x = x / other;
+			ans.y = y / other;
+			return ans;
+		}
 	};
 	struct Float2 {
 		Float2(){}

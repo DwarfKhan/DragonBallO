@@ -13,6 +13,7 @@ public:
 
 	void Update() override;
 	void OnCollision(Entity *other) override;
+	void OnProxCollision(Entity *other);
 	void Move();
 	void Animate();
 	void Death();

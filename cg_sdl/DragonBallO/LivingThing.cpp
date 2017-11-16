@@ -154,6 +154,10 @@ void LivingThing::OnCollision(Entity * other)
 	Entity::OnCollision(other);
 }
 
+void LivingThing::OnProxCollision(Entity * other)
+{
+}
+
 void LivingThing::Move()
 {
 	if (!mIsAlive)
@@ -202,12 +206,16 @@ void LivingThing::Move()
 
 	case sDirectFollow:
 
-		if (&mFollowTarget == nullptr) {
+		//making sure there is a target to follow
+		if (mFollowTarget == nullptr) {
 			printf("No target selected to follow, returning to default movestate.\n");
 			moveState = defaultMoveState;
+			break;
 		}
 
 		difPos = mFollowTarget->GetPos() - mPos;
+		mFollowVector = difPos;
+		Normalize(mFollowVector);
 
 		break;
 

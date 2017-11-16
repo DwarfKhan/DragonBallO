@@ -7,7 +7,7 @@ class Weapon :
 public:
 
 	bool attacking;
-	int attackDamage; // these are set to the player's variables of the same name. 
+	int attackDamage;
 
 
 

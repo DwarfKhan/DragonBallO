@@ -80,6 +80,7 @@
     <ClCompile Include="MoveTrigger.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ProxTrigger.cpp" />
     <ClCompile Include="SDLInit.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="MoveTrigger.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ProxTrigger.h" />
     <ClInclude Include="SDLInit.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Trigger.h" />

@@ -7,6 +7,7 @@
 #include "LivingThing.h"
 #include "Weapon.h"
 #include "CollisionLayer.h"
+#include "ProxTrigger.h"
 
 #define CAMERA_MODE Camera::Mode::PAN
 #define SHOW_COLLIDERS true
@@ -39,6 +40,7 @@ namespace {
 		Animation guardMoveDown;
 		Animation guardMoveLeft;
 		Animation guardMoveRight;
+		ProxTrigger guardProx;
 	MoveTrigger moveTrigger;
 	Weapon playerWeapon;
 
@@ -149,7 +151,7 @@ void InitEntities() {
 	boulder.SetSize(45, 45);
 
 	//collision
-	boulder.ConfigureCollision(false, true);
+	boulder.ConfigureCollision(true, true);
 	lLivingThings.AddEntity(boulder);
 
 
@@ -252,12 +254,20 @@ void InitEntities() {
 	//size
 	guard.SetSize(60, 60);
 	//collision
-	guard.ConfigureCollision(true, true, { 0,17 }, {26,0});
+	guard.ConfigureCollision(false, true, { 0,17 }, {26,0});
 	lLivingThings.AddEntity(guard);
+
+	//proxTrigger
+	guardProx.SetFollowingEntity(guard);
+	guardProx.SetSize(80,80);
+	guardProx.ConfigureCollision(false,false);
+	//lMoveTriggers.AddEntity(guardProx);
+	guardProx.AddCollidableEntity(player);
 
 	//navigation
 
-	guard.moveState = LivingThing::MoveState(2);
+	guard.moveState = LivingThing::MoveState::sDirectFollow;
+	guard.SetFollowTarget(&player);
 
 	//Spriteclips
 	guard.SetSpriteClip(0, 1, 25, 25, 0);
@@ -383,6 +393,7 @@ void GameManager::Update() {
 	target.Update();
 	boulder.Update();
 	guard.Update();
+	guardProx.Update();
 	player.Update();
 
 	//Needs to come last...
@@ -411,5 +422,6 @@ void GameManager::Render(){
 		sdlInit.DrawEntityCollider(player);
 		sdlInit.DrawEntityCollider(playerWeapon);
 		sdlInit.DrawEntityCollider(guard);
+		sdlInit.DrawEntityCollider(guardProx);
 	}
 }

@@ -117,6 +117,10 @@ void Player::PrintPos()
 		printf("Y: %f\n", mPos.y);
 }
 
+void Player::OnProxCollision(Entity * other)
+{
+}
+
 MyMath::Float2 Player::FindWeaponPos()
 {
 	MyMath::Int2 wepSize = playerWeapon->GetSize();

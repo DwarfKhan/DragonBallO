@@ -39,7 +39,7 @@ void Weapon::OnCollision(Entity * other)
 	lOther->TakeDamage(attackDamage);
 
 	attacking = false;
-	Entity::OnCollision(other);
+	//Entity::OnCollision(other);
 }
 
 
