@@ -38,6 +38,10 @@ public:
 
 	int attackRange;
 	int attackDamage;
+
+
+	float awareDist = 250.0f;
+
 	Weapon *attackingWeapon;
 	
 
@@ -47,7 +51,8 @@ public:
 protected:
 
 	float randomNavTimer = 0;
-	float randomNavMaxTime = 1;
+	float randomNavMaxTime = 18.0f;
+	float randomNavMinTime = 4.0f;
 
 	enum MoveDir { up, down, left, right, none };
 	MoveDir moveDir;

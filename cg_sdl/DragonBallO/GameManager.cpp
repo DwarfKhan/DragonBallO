@@ -266,7 +266,7 @@ void InitEntities() {
 
 	//navigation
 
-	guard.moveState = LivingThing::MoveState::sDirectFollow;
+	guard.moveState = LivingThing::MoveState::sRandom;
 	guard.SetFollowTarget(&player);
 
 	//Spriteclips

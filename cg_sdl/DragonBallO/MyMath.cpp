@@ -52,6 +52,14 @@ void MyMath::Normalize(Float2 &vector)
 	vector = ans;
 }
 
+float MyMath::Mag(Float2 vector)
+{
+	float ans = pow(vector.x, 2) + pow(vector.y, 2); //a^2 + b^2 = c^2
+	ans = pow(ans, .5); // this converts c^2 back to c (hypottenuse)
+	//printf("Mag. ans: %f.\n",ans);
+	return ans;
+}
+
 int MyMath::Max(int leftNum, int rightNum) {
 	return leftNum > rightNum ? leftNum : rightNum;
 }

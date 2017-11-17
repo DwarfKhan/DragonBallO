@@ -94,5 +94,6 @@ namespace MyMath {
 	int DiceRoll(int min, int max);
 	
 	void Normalize(Float2 &vector);
+	float Mag(Float2 vector); //returns the length of the hypotenuse of x and y components
 
 }

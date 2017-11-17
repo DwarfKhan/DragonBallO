@@ -197,7 +197,9 @@ void LivingThing::Move()
 			}
 
 			//reset timer
-			float newTime = (float)DiceRoll(0, randomNavMaxTime);
+			float newTime = (
+				((float)DiceRoll(randomNavMinTime, randomNavMaxTime))
+				/10.0f);
 				randomNavTimer = newTime;
 
 		}
@@ -214,6 +216,13 @@ void LivingThing::Move()
 		}
 
 		difPos = mFollowTarget->GetPos() - mPos;
+		
+		if (Mag(difPos) > awareDist)//if target is outside aware distance
+		{
+			mFollowVector = { 0,0 };
+			moveDir = none;
+			break;
+		}
 		mFollowVector = difPos;
 		Normalize(mFollowVector);
 
